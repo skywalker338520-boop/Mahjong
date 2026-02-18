@@ -153,15 +153,6 @@ const App: React.FC = () => {
             transition={{ duration: 0.5, ease: "easeInOut" }}
           >
             <div className="splash-content">
-              <motion.div
-                className="splash-logo-container"
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ delay: 0.2, duration: 0.8, type: "spring" }}
-              >
-                <img src="/icon.svg" alt="雀王 Logo" className="splash-logo" />
-              </motion.div>
-
               <motion.h1
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
