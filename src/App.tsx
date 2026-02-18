@@ -203,7 +203,6 @@ const App: React.FC = () => {
             {/* Skeuomorphic Header */}
             <header className="header">
               <div className="header-inner">
-                <img src="/icon.svg" alt="Logo" className="header-logo" />
                 <h1>雀王</h1>
               </div>
             </header>
