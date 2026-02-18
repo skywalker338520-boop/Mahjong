@@ -152,33 +152,54 @@ const App: React.FC = () => {
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.5, ease: "easeInOut" }}
           >
-            <div className="splash-content">
-              <motion.h1
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5, duration: 0.6 }}
-              >
-                雀王
-              </motion.h1>
-
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 0.7 }}
-                transition={{ delay: 0.8, duration: 0.6 }}
-              >
-                專業級台牌/港牌算牌助手
-              </motion.p>
+            <div className="splash-content square-city-theme">
+              <div className="mahjong-square">
+                <motion.div className="tile-edge top" animate={{ x: [-20, 0] }} transition={{ repeat: Infinity, duration: 2, repeatType: "reverse" }}>
+                  <div className="mj-tile-3d mini"><span className="tile-inner suit-z" data-char="東">東</span></div>
+                  <div className="mj-tile-3d mini"><span className="tile-inner suit-z" data-char="南">南</span></div>
+                  <div className="mj-tile-3d mini"><span className="tile-inner suit-z" data-char="西">西</span></div>
+                  <div className="mj-tile-3d mini"><span className="tile-inner suit-z" data-char="北">北</span></div>
+                </motion.div>
+                <motion.div className="tile-edge right" animate={{ y: [-20, 0] }} transition={{ repeat: Infinity, duration: 2.2, repeatType: "reverse" }}>
+                  <div className="mj-tile-3d mini"><span className="tile-inner suit-s" data-char="１">１</span></div>
+                  <div className="mj-tile-3d mini"><span className="tile-inner suit-s" data-char="２">２</span></div>
+                  <div className="mj-tile-3d mini"><span className="tile-inner suit-s" data-char="３">３</span></div>
+                </motion.div>
+                <div className="center-seal">
+                  <motion.h1
+                    initial={{ opacity: 0, scale: 0.5 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.8, type: "spring" }}
+                  >
+                    雀王
+                  </motion.h1>
+                  <motion.div
+                    className="sub-title"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.5 }}
+                  >
+                    推麻雀 • 四方城
+                  </motion.div>
+                </div>
+                <motion.div className="tile-edge bottom" animate={{ x: [20, 0] }} transition={{ repeat: Infinity, duration: 2, repeatType: "reverse" }}>
+                  <div className="mj-tile-3d mini"><span className="tile-inner suit-z" data-char="中">中</span></div>
+                  <div className="mj-tile-3d mini"><span className="tile-inner suit-z" data-char="發">發</span></div>
+                  <div className="mj-tile-3d mini"><span className="tile-inner suit-z" data-char="白">白</span></div>
+                </motion.div>
+                <motion.div className="tile-edge left" animate={{ y: [20, 0] }} transition={{ repeat: Infinity, duration: 2.2, repeatType: "reverse" }}>
+                  <div className="mj-tile-3d mini"><span className="tile-inner suit-m" data-char="一">一</span></div>
+                  <div className="mj-tile-3d mini"><span className="tile-inner suit-m" data-char="九">九</span></div>
+                </motion.div>
+              </div>
 
               <motion.button
-                className="start-button"
-                whileHover={{ scale: 1.05 }}
+                className="start-button-premium"
+                whileHover={{ scale: 1.05, backgroundColor: 'var(--gold-accent)' }}
                 whileTap={{ scale: 0.95 }}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1.1, duration: 0.5 }}
                 onClick={() => setShowSplash(false)}
               >
-                開始算牌
+                正式開枱
               </motion.button>
             </div>
 
