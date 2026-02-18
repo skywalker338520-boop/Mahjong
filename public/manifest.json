@@ -1,13 +1,13 @@
 {
     "name": "雀王",
     "short_name": "雀王",
-    "start_url": "/",
+    "start_url": "./",
     "display": "standalone",
     "background_color": "#0b3d2e",
     "theme_color": "#0b3d2e",
     "icons": [
         {
-            "src": "/icon.svg",
+            "src": "./icon.svg",
             "sizes": "any",
             "type": "image/svg+xml",
             "purpose": "any maskable"
