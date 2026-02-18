@@ -1,0 +1,524 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600;700;900&display=swap');
+
+:root {
+  /* Mahjong Table Palette */
+  --table-felt: #0b513b;
+  /* Authentic Green Felt */
+  --felt-shadow: #053a2a;
+  --wood-border: #4a1d07;
+  /* Dark Rosewood */
+  --wood-highlight: #78350f;
+  --ivory: #fffef5;
+  --ivory-shadow: #e2dfc8;
+  --jade-green: #065f46;
+  --cinnabar-red: #b91c1c;
+  --royal-blue: #1d4ed8;
+  --gold-accent: #fbbf24;
+  --text-main: #f8fafc;
+  --text-dim: rgba(248, 250, 252, 0.7);
+
+  /* Layout */
+  --safe-top: env(safe-area-inset-top, 10px);
+  --safe-bottom: 0px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+html {
+  height: 100%;
+  background-color: var(--table-felt);
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+body {
+  background-color: var(--table-felt);
+  background-image:
+    radial-gradient(circle at 50% 30%, transparent 20%, rgba(0, 0, 0, 0.3) 100%),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='feltFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0.1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23feltFilter)' opacity='0.12'/%3E%3C/svg%3E");
+  color: var(--text-main);
+  font-family: 'Noto Serif TC', serif;
+  overflow: hidden;
+  overscroll-behavior: none;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
+
+#root {
+  height: 100%;
+  width: 100%;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: calc(100% + env(safe-area-inset-bottom, 50px));
+  margin-bottom: calc(-1 * env(safe-area-inset-bottom, 50px));
+}
+
+/* Header - Classic Carved Look */
+.header {
+  padding: calc(var(--safe-top) + 12px) 16px 12px;
+  background: radial-gradient(circle at 20% center, rgba(6, 95, 70, 0.4) 0%, transparent 80%);
+  position: relative;
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+}
+
+.header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 20%;
+  right: 20%;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--ivory), transparent);
+  opacity: 0.3;
+}
+
+.header h1 {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 26px;
+  font-weight: 900;
+  color: var(--gold-accent);
+  letter-spacing: 6px;
+  margin-bottom: 0;
+  text-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.8),
+    0 0 15px var(--gold-glow);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-shrink: 0;
+}
+
+.header h1::before,
+.header h1::after {
+  content: '🀄';
+  font-size: 16px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+  opacity: 0.8;
+}
+
+
+
+/* Scrollable Content */
+.main-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 16px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  justify-content: flex-start;
+  scrollbar-width: none;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.main-content::-webkit-scrollbar {
+  display: none;
+}
+
+.classical-card {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  box-shadow:
+    inset 0 4px 12px rgba(0, 0, 0, 0.4),
+    0 1px 0 rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 16px;
+  position: relative;
+  width: 100%;
+}
+
+.section-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--gold-accent);
+  /* 改為金色更加醒目 */
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  opacity: 0.9;
+}
+
+.tile-input-body {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.footer-input-area {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--wood-border);
+  border-top: 1px solid var(--gold-accent);
+  /* 讓它像一個 Tab Bar */
+  box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  position: relative;
+  touch-action: none;
+  /* 修正語法：這是防止底部露綠色的關鍵 */
+  padding-bottom: env(safe-area-inset-bottom -10px);
+}
+
+/* 額外補強：確保不管怎麼拉，底部都是深木色 */
+.footer-input-area::after {
+  content: '';
+  position: absolute;
+  top: 99%;
+  left: 0;
+  right: 0;
+  height: 32px;
+  background: var(--wood-border);
+}
+
+/* 移除 ::after 的高度補償，改用背景延伸 */
+
+.footer-input-area .classical-card {
+  background: transparent;
+  /* 作為 Nav Bar，內部不再需要深色背景 */
+  border: none;
+  outline: none;
+  box-shadow: none;
+  padding: 6px 16px;
+  /* 更加緊湊 */
+  border-radius: 0;
+}
+
+.footer-input-area .classical-card:first-of-type {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  /* 輕微的分割線 */
+}
+
+/* 讓手牌區更像導航欄頂部的顯示區 */
+.hand-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  min-height: 48px;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Suit Sidebar */
+.suit-navigation {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 54px;
+  flex-shrink: 0;
+}
+
+.suit-nav-item {
+  width: 100%;
+  padding: 10px 0;
+  background: var(--wood-highlight);
+  color: var(--ivory);
+  border: 1px solid var(--gold-accent);
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 13px;
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  letter-spacing: 2px;
+  cursor: pointer;
+  box-shadow:
+    -2px 0 5px rgba(0, 0, 0, 0.4),
+    inset 0 1px 1px rgba(255, 255, 255, 0.2);
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.suit-nav-item.active {
+  background: var(--gold-accent);
+  color: var(--wood-border);
+  border-color: var(--gold-accent);
+}
+
+.suit-nav-item.active:active {
+  transform: scale(0.98);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Tile Grid */
+.input-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  /* 縮小邊距 */
+  justify-items: center;
+}
+
+.input-grid.honor-grid {
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+/* 3D Mahjong Tile Professional Styling */
+.mj-tile-3d {
+  width: 44px;
+  height: 58px;
+  background: linear-gradient(135deg, #ffffff 0%, var(--ivory) 45%, #f1efe0 100%);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+
+  /* High-Fidelity Physical Stack */
+  box-shadow:
+    /* Bezel lighting */
+    inset 0 1px 1px rgba(255, 255, 255, 1),
+    inset 1px 0 1px rgba(255, 255, 255, 0.6),
+    /* White Bone Layer */
+    0 1px 0 #d9d4b8,
+    /* The Seam (Real tiles have a dark line where layers meet) */
+    0 2px 0.5px rgba(0, 0, 0, 0.4),
+    /* Deep Green Backing Layer */
+    0 2.5px 0 #059669,
+    0 4.5px 0 #059669,
+    0 5.5px 0 #047857,
+    0 6px 0 #064e3b,
+    /* Ambient Occlusion & Table Shadow */
+    0 7px 10px rgba(0, 0, 0, 0.4),
+    0 10px 15px rgba(0, 0, 0, 0.15);
+
+  user-select: none;
+  /* Removed CSS transition to prevent flickering when Framer Motion handles layout */
+}
+
+.mj-tile-3d::after {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.4) 0%, transparent 60%);
+  pointer-events: none;
+  border-radius: 3px;
+}
+
+
+
+.tile-inner {
+  font-size: 32px;
+  font-weight: 800;
+  line-height: 1;
+  transform: translateY(-1px);
+  filter: drop-shadow(0 0.5px 0.5px rgba(0, 0, 0, 0.2));
+  z-index: 2;
+  transition: transform 0.1s;
+}
+
+.tile-counter-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: var(--cinnabar-red);
+  color: white;
+  font-size: 10px;
+  font-weight: 900;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  z-index: 10;
+  border: 1.5px solid var(--ivory);
+}
+
+.mj-tile-3d.maxed {
+  cursor: not-allowed;
+}
+
+.suit-m {
+  color: var(--cinnabar-red);
+}
+
+.suit-p {
+  color: var(--royal-blue);
+}
+
+.suit-s {
+  color: var(--jade-green);
+}
+
+.suit-z {
+  color: #1e293b;
+  /* 風牌用深色 */
+}
+
+/* 具體修正中發白的顏色 */
+.tile-inner[data-char="中"] {
+  color: var(--cinnabar-red) !important;
+}
+
+.tile-inner[data-char="發"] {
+  color: var(--jade-green) !important;
+}
+
+.tile-inner[data-char="白"] {
+  color: var(--royal-blue) !important;
+}
+
+/* Hand Display */
+.hand-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  min-height: 52px;
+  justify-content: center;
+  align-items: center;
+}
+
+.placeholder-text {
+  font-size: 13px;
+  opacity: 0.5;
+  text-align: center;
+  width: 100%;
+  padding: 20px;
+}
+
+/* Result Section Styles */
+.analysis-badge {
+  background: var(--jade-green);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-weight: 700;
+  display: inline-block;
+  box-shadow: 0 4px 0 #14532d;
+  margin-bottom: 20px;
+}
+
+.discard-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px;
+  background: #ffffff;
+  /* 白色背景確保文字清晰 */
+  border-radius: 12px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: all 0.1s;
+}
+
+.discard-item:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 var(--ivory-shadow);
+}
+
+.discard-info h4 {
+  margin: 0;
+  font-size: 16px;
+  color: #1e293b;
+  /* 使用實色確保在白色背景可見 */
+  font-weight: 700;
+}
+
+.discard-info p {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: #64748b;
+  /* 灰色副標題 */
+  font-weight: 500;
+}
+
+.wait-tile-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.waiting-tiles-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: flex-start;
+  padding: 10px 0;
+}
+
+.waiting-tile-large {
+  width: 54px !important;
+  height: 72px !important;
+  cursor: default !important;
+}
+
+.waiting-tile-large .tile-inner {
+  font-size: 42px !important;
+}
+
+.remain-count {
+  font-size: 13px;
+  font-weight: 900;
+  color: var(--cinnabar-red);
+}
+
+/* Animations */
+.fade-in-classic {
+  animation: fadeInClassic 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes fadeInClassic {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Physical Tile Drop */
+@keyframes tileDrop {
+  0% {
+    transform: translateY(-30px) scale(1.2);
+    opacity: 0;
+  }
+
+  70% {
+    transform: translateY(5px) scale(0.95);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
