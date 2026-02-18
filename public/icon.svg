@@ -1,67 +1,101 @@
 <svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <!-- Background Gradient -->
-    <linearGradient id="bg_grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#0f523d;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#06261d;stop-opacity:1" />
+    <!-- Premium Background Gradient -->
+    <radialGradient id="premium_bg" cx="50%" cy="50%" r="50%" fx="50%" fy="30%">
+      <stop offset="0%" style="stop-color:#2D6A4F;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#081C15;stop-opacity:1" />
+    </radialGradient>
+
+    <!-- Ivory Tile Gradient -->
+    <linearGradient id="ivory_face" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFFFFF;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#F5F3F1;stop-opacity:1" />
     </linearGradient>
-    
-    <!-- Tile Gradient -->
-    <linearGradient id="tile_grad" x1="50%" y1="0%" x2="50%" y2="100%">
-      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#e0e0e0;stop-opacity:1" />
+
+    <!-- Side Depth Gradient -->
+    <linearGradient id="tile_side" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#E0DEDC;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#BDBAB7;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Gold Gradient for Crown -->
+    <linearGradient id="gold_grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FEE440;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#D4AF37;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#9B7F1E;stop-opacity:1" />
     </linearGradient>
 
     <!-- Drop Shadow -->
-    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur in="SourceAlpha" stdDeviation="15" />
-      <feOffset dx="0" dy="15" result="offsetblur" />
+    <filter id="premium_shadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="12" />
+      <feOffset dx="0" dy="12" result="offsetblur" />
       <feComponentTransfer>
-        <feFuncA type="linear" slope="0.5" />
+        <feFuncA type="linear" slope="0.6" />
       </feComponentTransfer>
       <feMerge>
         <feMergeNode />
         <feMergeNode in="SourceGraphic" />
       </feMerge>
     </filter>
-
-    <!-- Gold Gradient for Crown -->
-    <linearGradient id="gold_grad" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#FFD700;stop-opacity:1" />
-      <stop offset="50%" style="stop-color:#FDB931;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#9E7E1D;stop-opacity:1" />
-    </linearGradient>
   </defs>
 
-  <!-- Canvas Background -->
-  <rect width="512" height="512" rx="112" fill="url(#bg_grad)"/>
+  <!-- Background Canvas -->
+  <rect width="512" height="512" rx="100" fill="url(#premium_bg)" />
   
-  <!-- Subtle Inner Glow -->
-  <rect x="10" y="10" width="492" height="492" rx="102" stroke="white" stroke-opacity="0.1" stroke-width="2" fill="none"/>
+  <!-- Subtle inner glow for the canvas -->
+  <rect x="10" y="10" width="492" height="492" rx="90" stroke="white" stroke-opacity="0.05" stroke-width="2" fill="none" />
 
-  <!-- Mahjong Tile with Shadow -->
-  <g filter="url(#shadow)">
-    <!-- Tile Side (3D Depth) -->
-    <rect x="140" y="125" width="232" height="310" rx="20" fill="#bdbdbd"/>
-    <!-- Tile Face -->
-    <rect x="140" y="120" width="232" height="300" rx="20" fill="url(#tile_grad)"/>
+  <!-- The Tile -->
+  <g filter="url(#premium_shadow)">
+    <!-- 3D Base -->
+    <rect x="136" y="116" width="240" height="320" rx="24" fill="url(#tile_side)" />
+    <!-- Top Face -->
+    <rect x="136" y="110" width="240" height="300" rx="24" fill="url(#ivory_face)" />
     
-    <!-- Character '中' -->
-    <g transform="translate(140, 120)">
-      <!-- Vertical stroke -->
-      <rect x="106" y="60" width="20" height="180" rx="4" fill="#D32F2F"/>
-      <!-- Outer box -->
-      <path d="M50 90C50 84.4772 54.4772 80 60 80H172C177.523 80 182 84.4772 182 90V170C182 175.523 177.523 180 172 180H60C54.4772 180 50 175.523 50 170V90Z" stroke="#D32F2F" stroke-width="16" fill="none"/>
-      <!-- Inner horizontal bar -->
-      <rect x="58" y="122" width="116" height="16" rx="2" fill="#D32F2F"/>
+    <!-- Decorative Border on Tile -->
+    <rect x="156" y="130" width="200" height="260" rx="12" stroke="#2D6A4F" stroke-width="1" stroke-opacity="0.2" fill="none" />
+
+    <!-- Authentic Style Sparrow (1 Bamboo) -->
+    <g transform="translate(180, 160) scale(0.9)">
+      <!-- Tail -->
+      <path d="M20 150 C10 180 30 200 60 190 C40 170 30 150 20 150 Z" fill="#D00000" />
+      <path d="M30 140 C20 170 40 190 70 180 C50 160 40 140 30 140 Z" fill="#40916C" />
+      
+      <!-- Body -->
+      <path d="M50 160 C30 130 30 80 80 60 C130 40 170 80 170 130 C170 180 130 210 80 190 C60 180 50 170 50 160 Z" fill="#2D6A4F" />
+      
+      <!-- Wings -->
+      <path d="M100 80 C140 70 180 100 160 150 C140 180 110 160 100 130 Z" fill="#1B4332" />
+      <path d="M105 85 C135 75 165 100 150 140 C135 160 115 145 105 125 Z" fill="#40916C" />
+      
+      <!-- Chest -->
+      <path d="M60 130 C60 110 90 90 120 100 C100 110 80 130 80 160 C80 180 70 170 60 130 Z" fill="#FFFFFF" fill-opacity="0.2" />
+
+      <!-- Head -->
+      <circle cx="85" cy="55" r="35" fill="#2D6A4F" />
+      <circle cx="95" cy="45" r="8" fill="white" />
+      <circle cx="97" cy="43" r="4" fill="black" />
+      
+      <!-- Beak -->
+      <path d="M55 45 L35 55 L55 65 Z" fill="#D4AF37" />
+      
+      <!-- Crest (Royal addition) -->
+      <path d="M85 20 L75 5 L95 5 L85 20 Z" fill="#D00000" />
     </g>
   </g>
 
-  <!-- Premium Golden Crown -->
-  <g transform="translate(256, 110) scale(1.5)" filter="url(#shadow)">
-    <path d="M-30 0 L-20 -25 L0 -10 L20 -25 L30 0 Z" fill="url(#gold_grad)" stroke="#9E7E1D" stroke-width="1"/>
-    <circle cx="-30" cy="0" r="3" fill="#FFD700"/>
-    <circle cx="0" cy="-10" r="3" fill="#FFD700"/>
-    <circle cx="30" cy="0" r="3" fill="#FFD700"/>
+  <!-- Golden Crown -->
+  <g transform="translate(256, 120) scale(1.15)" filter="url(#premium_shadow)">
+    <path d="M-60 0 L-45 -55 L-20 -25 L0 -65 L20 -25 L45 -55 L60 0 Z" fill="url(#gold_grad)" stroke="#9B7F1E" stroke-width="1.5" />
+    <!-- Jewels -->
+    <circle cx="0" cy="-65" r="9" fill="#D00000" />
+    <circle cx="-45" cy="-55" r="7" fill="#FB8500" />
+    <circle cx="45" cy="-55" r="7" fill="#FB8500" />
+    <circle cx="-60" cy="0" r="6" fill="#D4AF37" />
+    <circle cx="60" cy="0" r="6" fill="#D4AF37" />
+    <circle cx="0" cy="-15" r="5" fill="#00A8E8" />
   </g>
+  
+  <!-- Final Specular Highlight -->
+  <path d="M100 0 C44.7715 0 0 44.7715 0 100 V160 C0 160 256 260 512 160 V100 C512 44.7715 467.228 0 412 0 H100 Z" fill="white" fill-opacity="0.07" />
 </svg>
