@@ -42,7 +42,6 @@ const getShantenText = (shanten: number, type: 'waiting' | 'discard') => {
 
 
 const App: React.FC = () => {
-  const [showSplash, setShowSplash] = useState(true);
   const [hand, setHand] = useState<Hand>([]);
   const [activeSuit, setActiveSuit] = useState<Suit>('m');
   const lastClickTime = React.useRef<number>(0);
@@ -143,246 +142,174 @@ const App: React.FC = () => {
 
   return (
     <div className="app-container">
-      <AnimatePresence mode="wait">
-        {showSplash ? (
-          <motion.div
-            key="splash"
-            className="splash-screen"
-            initial={{ opacity: 1 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.5, ease: "easeInOut" }}
-          >
-            <div className="splash-content square-city-theme">
-              <div className="mahjong-square">
-                <motion.div className="tile-edge top" animate={{ x: [-20, 0] }} transition={{ repeat: Infinity, duration: 2, repeatType: "reverse" }}>
-                  <div className="mj-tile-3d mini"><span className="tile-inner suit-z" data-char="東">東</span></div>
-                  <div className="mj-tile-3d mini"><span className="tile-inner suit-z" data-char="南">南</span></div>
-                  <div className="mj-tile-3d mini"><span className="tile-inner suit-z" data-char="西">西</span></div>
-                  <div className="mj-tile-3d mini"><span className="tile-inner suit-z" data-char="北">北</span></div>
-                </motion.div>
-                <motion.div className="tile-edge right" animate={{ y: [-20, 0] }} transition={{ repeat: Infinity, duration: 2.2, repeatType: "reverse" }}>
-                  <div className="mj-tile-3d mini"><span className="tile-inner suit-s" data-char="１">１</span></div>
-                  <div className="mj-tile-3d mini"><span className="tile-inner suit-s" data-char="２">２</span></div>
-                  <div className="mj-tile-3d mini"><span className="tile-inner suit-s" data-char="３">３</span></div>
-                </motion.div>
-                <div className="center-seal">
-                  <motion.h1
-                    initial={{ opacity: 0, scale: 0.5 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.8, type: "spring" }}
-                  >
-                    雀王
-                  </motion.h1>
-                  <motion.div
-                    className="sub-title"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.5 }}
-                  >
-                    推麻雀 • 四方城
-                  </motion.div>
-                </div>
-                <motion.div className="tile-edge bottom" animate={{ x: [20, 0] }} transition={{ repeat: Infinity, duration: 2, repeatType: "reverse" }}>
-                  <div className="mj-tile-3d mini"><span className="tile-inner suit-z" data-char="中">中</span></div>
-                  <div className="mj-tile-3d mini"><span className="tile-inner suit-z" data-char="發">發</span></div>
-                  <div className="mj-tile-3d mini"><span className="tile-inner suit-z" data-char="白">白</span></div>
-                </motion.div>
-                <motion.div className="tile-edge left" animate={{ y: [20, 0] }} transition={{ repeat: Infinity, duration: 2.2, repeatType: "reverse" }}>
-                  <div className="mj-tile-3d mini"><span className="tile-inner suit-m" data-char="一">一</span></div>
-                  <div className="mj-tile-3d mini"><span className="tile-inner suit-m" data-char="九">九</span></div>
-                </motion.div>
-              </div>
+      <motion.div
+        key="main"
+        className="main-layout"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+        style={{ height: '100%', width: '100%', display: 'flex', flexDirection: 'column' }}
+      >
+        {/* Skeuomorphic Header */}
+        <header className="header">
+          <div className="header-inner">
+            <h1>雀王</h1>
+          </div>
+        </header>
 
-              <motion.button
-                className="start-button-premium"
-                whileHover={{ scale: 1.05, backgroundColor: 'var(--gold-accent)' }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => setShowSplash(false)}
-              >
-                正式開枱
-              </motion.button>
+        <main className="main-content fade-in-classic">
+          {/* Section: Analysis */}
+          <div className="classical-card">
+            <div className="section-title">
+              <Scale size={14} /> {analysis?.type === 'waiting' ? '聽牌及進張分析' : '打牌戰術建議'}
             </div>
 
-            <motion.div
-              className="splash-footer"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 0.4 }}
-              transition={{ delay: 1.4 }}
-            >
-              Vibe Coding • Premium Quality
-            </motion.div>
-          </motion.div>
-        ) : (
-          <motion.div
-            key="main"
-            className="main-layout"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            style={{ height: '100%', width: '100%', display: 'flex', flexDirection: 'column' }}
-          >
-            {/* Skeuomorphic Header */}
-            <header className="header">
-              <div className="header-inner">
-                <h1>雀王</h1>
-              </div>
-            </header>
-
-            <main className="main-content fade-in-classic">
-              {/* Section: Analysis */}
-              <div className="classical-card">
-                <div className="section-title">
-                  <Scale size={14} /> {analysis?.type === 'waiting' ? '聽牌及進張分析' : '打牌戰術建議'}
+            {!analysis ? (
+              <div className="placeholder-text">輸入手牌後顯示詳細分析</div>
+            ) : (
+              <div>
+                <div className="analysis-badge">
+                  {getShantenText(analysis.shanten, analysis.type)}
                 </div>
 
-                {!analysis ? (
-                  <div className="placeholder-text">輸入手牌後顯示詳細分析</div>
-                ) : (
-                  <div>
-                    <div className="analysis-badge">
-                      {getShantenText(analysis.shanten, analysis.type)}
-                    </div>
-
-                    {analysis.type === 'waiting' ? (
-                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px' }}>
-                        {analysis.waitingTiles && analysis.waitingTiles.length > 0 ? (
-                          <div className="waiting-tiles-grid">
-                            {analysis.waitingTiles.map((w, i) => (
-                              <div key={i} className="wait-tile-box">
-                                <div className="mj-tile-3d waiting-tile-large">
-                                  <span className={`tile-inner suit-${w.tile.suit}`} data-char={getTileChar(w.tile)}>{getTileChar(w.tile)}</span>
-                                </div>
-                                <span className="remain-count">餘 {w.remaining} 張</span>
-                              </div>
-                            ))}
+                {analysis.type === 'waiting' ? (
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px' }}>
+                    {analysis.waitingTiles && analysis.waitingTiles.length > 0 ? (
+                      <div className="waiting-tiles-grid">
+                        {analysis.waitingTiles.map((w, i) => (
+                          <div key={i} className="wait-tile-box">
+                            <div className="mj-tile-3d waiting-tile-large">
+                              <span className={`tile-inner suit-${w.tile.suit}`} data-char={getTileChar(w.tile)}>{getTileChar(w.tile)}</span>
+                            </div>
+                            <span className="remain-count">餘 {w.remaining} 張</span>
                           </div>
-                        ) : (
-                          <div className="placeholder-text">無效進張</div>
-                        )}
+                        ))}
                       </div>
                     ) : (
-                      <div>
-                        {analysis.bestDiscards && analysis.bestDiscards.length > 0 ? (
-                          analysis.bestDiscards.slice(0, 3).map((d, i) => (
-                            <motion.div
-                              key={i}
-                              className="discard-item"
-                              whileHover={{ scale: 1.02 }}
-                              whileTap={{ scale: 0.98 }}
-                              onClick={() => discardByTile(d.tile)}
-                            >
-                              <div className="mj-tile-3d" style={{ transform: 'scale(0.7)', flexShrink: 0 }}>
-                                <span className={`tile-inner suit-${d.tile.suit}`} data-char={getTileChar(d.tile)}>{getTileChar(d.tile)}</span>
-                              </div>
-                              <div className="discard-info" style={{ flexGrow: 1 }}>
-                                <h4>建議打 {getTileChar(d.tile)}</h4>
-                                <p>效率：{d.effectiveTiles} 張 (期待：{d.waitingFor.slice(0, 3).map(getTileChar).join(', ')})</p>
-                              </div>
-                              <ChevronRight size={16} />
-                            </motion.div>
-                          ))
-                        ) : (
-                          <div className="placeholder-text">
-                            {analysis.shanten === -1 ? '🀄 恭喜食糊！已經不需要打牌了。' : '目前無需打牌。'}
+                      <div className="placeholder-text">無效進張</div>
+                    )}
+                  </div>
+                ) : (
+                  <div>
+                    {analysis.bestDiscards && analysis.bestDiscards.length > 0 ? (
+                      analysis.bestDiscards.slice(0, 3).map((d, i) => (
+                        <motion.div
+                          key={i}
+                          className="discard-item"
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
+                          onClick={() => discardByTile(d.tile)}
+                        >
+                          <div className="mj-tile-3d" style={{ transform: 'scale(0.7)', flexShrink: 0 }}>
+                            <span className={`tile-inner suit-${d.tile.suit}`} data-char={getTileChar(d.tile)}>{getTileChar(d.tile)}</span>
                           </div>
-                        )}
+                          <div className="discard-info" style={{ flexGrow: 1 }}>
+                            <h4>建議打 {getTileChar(d.tile)}</h4>
+                            <p>效率：{d.effectiveTiles} 張 (期待：{d.waitingFor.slice(0, 3).map(getTileChar).join(', ')})</p>
+                          </div>
+                          <ChevronRight size={16} />
+                        </motion.div>
+                      ))
+                    ) : (
+                      <div className="placeholder-text">
+                        {analysis.shanten === -1 ? '🀄 恭喜食糊！已經不需要打牌了。' : '目前無需打牌。'}
                       </div>
                     )}
                   </div>
                 )}
               </div>
+            )}
+          </div>
 
-            </main>
+        </main>
 
-            {/* Fixed Bottom Area */}
-            <footer className="footer-input-area">
-              {/* Section: My Hand */}
-              <div className="classical-card">
-                <div className="section-title" style={{ display: 'flex', justifyContent: 'space-between', userSelect: 'none' }}>
-                  <span
-                    onClick={clearHand}
-                    style={{ cursor: 'pointer', display: 'inline-flex', alignItems: 'center', transition: 'opacity 0.2s' }}
-                    className="reset-trigger"
+        {/* Fixed Bottom Area */}
+        <footer className="footer-input-area">
+          {/* Section: My Hand */}
+          <div className="classical-card">
+            <div className="section-title" style={{ display: 'flex', justifyContent: 'space-between', userSelect: 'none' }}>
+              <span
+                onClick={clearHand}
+                style={{ cursor: 'pointer', display: 'inline-flex', alignItems: 'center', transition: 'opacity 0.2s' }}
+                className="reset-trigger"
+              >
+                我的手牌 ({hand.length}/17)
+              </span>
+            </div>
+            <div className="hand-container">
+              <AnimatePresence mode="popLayout">
+                {hand.map((tile, index) => (
+                  <motion.div
+                    key={`${tileToKey(tile)}-${index}`}
+                    layout="position"
+                    initial={{ opacity: 0, y: -12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, transition: { duration: 0.1 } }}
+                    whileTap={{ y: 2, scale: 0.78 }}
+                    transition={{
+                      layout: { type: "spring", stiffness: 300, damping: 30 },
+                      opacity: { duration: 0.15 },
+                      scale: { duration: 0.1 }
+                    }}
+                    className="mj-tile-3d"
+                    style={{ scale: 0.8 }}
+                    onClick={() => removeTile(index)}
                   >
-                    我的手牌 ({hand.length}/17)
-                  </span>
+                    <span className={`tile-inner suit-${tile.suit}`} data-char={getTileChar(tile)}>{getTileChar(tile)}</span>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+              {hand.length === 0 && (
+                <div className="placeholder-text">
+                  牌桌是空的，請下方選取手牌
                 </div>
-                <div className="hand-container">
-                  <AnimatePresence mode="popLayout">
-                    {hand.map((tile, index) => (
-                      <motion.div
-                        key={`${tileToKey(tile)}-${index}`}
-                        layout="position"
-                        initial={{ opacity: 0, y: -12 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, transition: { duration: 0.1 } }}
-                        whileTap={{ y: 2, scale: 0.78 }}
-                        transition={{
-                          layout: { type: "spring", stiffness: 300, damping: 30 },
-                          opacity: { duration: 0.15 },
-                          scale: { duration: 0.1 }
-                        }}
-                        className="mj-tile-3d"
-                        style={{ scale: 0.8 }}
-                        onClick={() => removeTile(index)}
-                      >
-                        <span className={`tile-inner suit-${tile.suit}`} data-char={getTileChar(tile)}>{getTileChar(tile)}</span>
-                      </motion.div>
-                    ))}
-                  </AnimatePresence>
-                  {hand.length === 0 && (
-                    <div className="placeholder-text">
-                      牌桌是空的，請下方選取手牌
-                    </div>
-                  )}
-                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Section: Tile Input */}
+          <div className="classical-card">
+            <div className="section-title">
+              <Info size={14} /> 點選牌組加入手牌
+            </div>
+
+            <div className="tile-input-body">
+              <div className="suit-navigation">
+                {(['m', 'p', 's', 'z'] as Suit[]).map(s => (
+                  <button
+                    key={s}
+                    className={`suit-nav-item ${activeSuit === s ? 'active' : ''}`}
+                    onClick={() => setActiveSuit(s)}
+                  >
+                    {SUIT_LABELS[s]}
+                  </button>
+                ))}
               </div>
 
-              {/* Section: Tile Input */}
-              <div className="classical-card">
-                <div className="section-title">
-                  <Info size={14} /> 點選牌組加入手牌
-                </div>
+              <div className={`input-grid ${activeSuit === 'z' ? 'honor-grid' : ''}`}>
+                {(activeSuit === 'z' ? [1, 2, 3, 4, 5, 6, 7] : [1, 2, 3, 4, 5, 6, 7, 8, 9]).map(rank => {
+                  const tile: Tile = { suit: activeSuit, rank: rank as TileRank };
+                  const count = hand.filter(t => t.suit === tile.suit && t.rank === tile.rank).length;
+                  const isMaxed = count >= 4;
 
-                <div className="tile-input-body">
-                  <div className="suit-navigation">
-                    {(['m', 'p', 's', 'z'] as Suit[]).map(s => (
-                      <button
-                        key={s}
-                        className={`suit-nav-item ${activeSuit === s ? 'active' : ''}`}
-                        onClick={() => setActiveSuit(s)}
-                      >
-                        {SUIT_LABELS[s]}
-                      </button>
-                    ))}
-                  </div>
-
-                  <div className={`input-grid ${activeSuit === 'z' ? 'honor-grid' : ''}`}>
-                    {(activeSuit === 'z' ? [1, 2, 3, 4, 5, 6, 7] : [1, 2, 3, 4, 5, 6, 7, 8, 9]).map(rank => {
-                      const tile: Tile = { suit: activeSuit, rank: rank as TileRank };
-                      const count = hand.filter(t => t.suit === tile.suit && t.rank === tile.rank).length;
-                      const isMaxed = count >= 4;
-
-                      return (
-                        <motion.div
-                          key={tileToKey(tile)}
-                          className={`mj-tile-3d ${isMaxed ? 'maxed' : ''}`}
-                          layout
-                          whileTap={{ y: 2, scale: 0.96 }}
-                          onClick={() => addTile(tile)}
-                          style={{ opacity: isMaxed ? 0.4 : 1, transition: 'opacity 0.2s' }}
-                        >
-                          <span className={`tile-inner suit-${activeSuit}`} data-char={getTileChar(tile)}>{getTileChar(tile)}</span>
-                        </motion.div>
-                      );
-                    })}
-                  </div>
-                </div>
+                  return (
+                    <motion.div
+                      key={tileToKey(tile)}
+                      className={`mj-tile-3d ${isMaxed ? 'maxed' : ''}`}
+                      layout
+                      whileTap={{ y: 2, scale: 0.96 }}
+                      onClick={() => addTile(tile)}
+                      style={{ opacity: isMaxed ? 0.4 : 1, transition: 'opacity 0.2s' }}
+                    >
+                      <span className={`tile-inner suit-${activeSuit}`} data-char={getTileChar(tile)}>{getTileChar(tile)}</span>
+                    </motion.div>
+                  );
+                })}
               </div>
-            </footer>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            </div>
+          </div>
+        </footer>
+      </motion.div>
     </div>
   );
 };
